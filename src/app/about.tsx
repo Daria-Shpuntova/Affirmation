@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SunIcon } from '@/components/sun-icon';
@@ -8,6 +8,7 @@ import {
   aboutText,
   APP_NAME,
   APP_VERSION,
+  DEVELOPER_EMAIL,
   privacyPolicyText,
   termsOfUseText,
 } from '@/constants/legal';
@@ -29,6 +30,13 @@ export default function AboutScreen() {
             {APP_NAME}
           </ThemedText>
           <ThemedText themeColor="textSecondary">Версия {APP_VERSION}</ThemedText>
+          <Pressable
+            accessibilityRole="link"
+            onPress={() => Linking.openURL(`mailto:${DEVELOPER_EMAIL}`)}>
+            <ThemedText themeColor="accent" style={styles.email}>
+              {DEVELOPER_EMAIL}
+            </ThemedText>
+          </Pressable>
         </View>
 
         <Section title="О приложении" body={aboutText} />
@@ -65,6 +73,10 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.three,
   },
   title: {
+    textAlign: 'center',
+  },
+  email: {
+    marginTop: Spacing.one,
     textAlign: 'center',
   },
   card: {
