@@ -2,6 +2,7 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { SunIcon } from '@/components/sun-icon';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Colors, Spacing } from '@/constants/theme';
@@ -54,7 +55,7 @@ export default function AffirmationScreen() {
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + Spacing.four }]}>
         <ThemedView type="backgroundElement" style={[styles.card, { borderColor: theme.border }]}>
-          <ThemedText style={styles.sun}>☀️</ThemedText>
+          <SunIcon size={36} />
           <ThemedText style={styles.text}>{affirmation.text}</ThemedText>
         </ThemedView>
 
@@ -106,10 +107,6 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     padding: Spacing.four,
     gap: Spacing.three,
-  },
-  sun: {
-    fontSize: 28,
-    lineHeight: 34,
   },
   text: {
     fontSize: 18,

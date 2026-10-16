@@ -1,7 +1,8 @@
-import { Link, router, Stack } from 'expo-router';
+import { Link, router, Stack, type Href } from 'expo-router';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { SunIcon } from '@/components/sun-icon';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Colors, Spacing } from '@/constants/theme';
@@ -9,7 +10,6 @@ import { useAffirmations } from '@/context/affirmations-context';
 import type { Affirmation } from '@/types/affirmation';
 
 const theme = Colors.light;
-const SUN_MARKS = ['☀️', '🌼', '✨'];
 
 export default function HomeScreen() {
   const { affirmations } = useAffirmations();
@@ -49,16 +49,23 @@ export default function HomeScreen() {
             Пока нет аффирмаций. Добавьте первую.
           </ThemedText>
         }
-        renderItem={({ item, index }) => (
-          <AffirmationRow item={item} mark={SUN_MARKS[index % SUN_MARKS.length] ?? '☀️'} />
-        )}
-        ListFooterComponent={<View style={{ height: insets.bottom + Spacing.three }} />}
+        renderItem={({ item }) => <AffirmationRow item={item} />}
+        ListFooterComponent={
+          <View style={[styles.footer, { paddingBottom: insets.bottom + Spacing.three }]}>
+            <Pressable
+              accessibilityRole="button"
+              style={styles.aboutLink}
+              onPress={() => router.push('/about' as Href)}>
+              <ThemedText themeColor="accent">О приложении и документы</ThemedText>
+            </Pressable>
+          </View>
+        }
       />
     </ThemedView>
   );
 }
 
-function AffirmationRow({ item, mark }: { item: Affirmation; mark: string }) {
+function AffirmationRow({ item }: { item: Affirmation }) {
   return (
     <Link
       href={{
@@ -75,7 +82,7 @@ function AffirmationRow({ item, mark }: { item: Affirmation; mark: string }) {
             borderColor: theme.border,
           },
         ]}>
-        <ThemedText style={styles.mark}>{mark}</ThemedText>
+        <SunIcon size={28} />
         <ThemedText style={styles.rowTitle}>{item.title}</ThemedText>
         <ThemedText themeColor="accent">›</ThemedText>
       </Pressable>
@@ -124,10 +131,6 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     borderWidth: 1.5,
   },
-  mark: {
-    fontSize: 22,
-    lineHeight: 28,
-  },
   rowTitle: {
     flex: 1,
     fontSize: 18,
@@ -136,5 +139,13 @@ const styles = StyleSheet.create({
   empty: {
     textAlign: 'center',
     marginTop: Spacing.four,
+  },
+  footer: {
+    alignItems: 'center',
+    paddingTop: Spacing.four,
+  },
+  aboutLink: {
+    paddingVertical: Spacing.two,
+    paddingHorizontal: Spacing.three,
   },
 });

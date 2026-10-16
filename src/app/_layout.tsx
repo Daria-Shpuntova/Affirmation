@@ -67,6 +67,11 @@ function RootNavigator() {
         <Stack.Title style={titleStyle}>Аффирмация</Stack.Title>
         <Stack.Screen.BackButton>Главная</Stack.Screen.BackButton>
       </Stack.Screen>
+      <Stack.Screen name="about">
+        <Stack.Header style={headerStyle} />
+        <Stack.Title style={titleStyle}>О приложении</Stack.Title>
+        <Stack.Screen.BackButton>Главная</Stack.Screen.BackButton>
+      </Stack.Screen>
     </Stack>
   );
 }
